@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6366f1">
+  <title>Archivo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' }</script>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body class="text-slate-900 dark:text-white min-h-screen flex items-center justify-center p-4">
+
+  <div class="blobs"><span></span><span></span><span></span></div>
+
+  <div class="fixed top-4 right-4 flex gap-2">
+    <button id="lang-btn" onclick="cycleLang()" class="px-3 py-2 rounded-xl bg-white/70 dark:bg-slate-700/70 backdrop-blur text-sm font-semibold">EN</button>
+    <button onclick="Theme.toggle()" class="px-3 py-2 rounded-xl bg-white/70 dark:bg-slate-700/70 backdrop-blur text-lg">🌙 ☀️</button>
+  </div>
+
+  <div class="w-full max-w-sm rise">
+    <div class="text-center mb-6">
+      <h1 class="text-5xl font-extrabold"><span class="title">Archivo</span> <span class="flame">🔥</span></h1>
+      <p data-i18n="tagline" class="text-slate-500 dark:text-slate-300 mt-2"></p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
+      <div class="flex mb-5 bg-slate-100/80 dark:bg-slate-700/80 rounded-xl p-1">
+        <button id="tab-login" data-i18n="login" onclick="showTab('login')"
+          class="flex-1 py-2 rounded-lg font-semibold"></button>
+        <button id="tab-signup" data-i18n="signup" onclick="showTab('signup')"
+          class="flex-1 py-2 rounded-lg font-semibold"></button>
+      </div>
+
+      <form id="auth-form" onsubmit="event.preventDefault(); handleSubmit()" class="space-y-3">
+        <input id="username" type="text" data-i18n-ph="username"
+          class="hidden w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent">
+        <input id="email" type="email" data-i18n-ph="email" required
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent">
+        <input id="password" type="password" data-i18n-ph="password" required minlength="6"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent">
+        <p id="msg" class="text-sm text-center"></p>
+        <button id="submit-btn" type="submit"
+          class="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold"></button>
+      </form>
+    </div>
+  </div>
+ 
+  <p class="footer-credit login-footer">Created with 🌌HOPE ❤️ of <b>Rounak</b></p> 
+  
+  <script>
+    let mode = 'login';
+    function showTab(m) {
+      mode = m;
+      const on = 'bg-white dark:bg-slate-900 shadow';
+      document.getElementById('tab-login').className =
+        'flex-1 py-2 rounded-lg font-semibold ' + (m === 'login' ? on : '');
+      document.getElementById('tab-signup').className =
+        'flex-1 py-2 rounded-lg font-semibold ' + (m === 'signup' ? on : '');
+      document.getElementById('username').classList.toggle('hidden', m === 'login');
+      document.getElementById('submit-btn').textContent = t(m === 'login' ? 'login' : 'create');
+      document.getElementById('msg').textContent = '';
+    }
+    window.onLangChange = () => showTab(mode);
+    showTab('login');
+  </script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
